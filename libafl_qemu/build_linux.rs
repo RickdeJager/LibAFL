@@ -1,9 +1,9 @@
 use std::{env, fs, path::Path, process::Command};
 use which::which;
 
-const QEMU_URL: &str = "https://github.com/AFLplusplus/qemu-libafl-bridge";
+const QEMU_URL: &str = "https://github.com/RickdeJager/qemu-libafl-bridge";
 const QEMU_DIRNAME: &str = "qemu-libafl-bridge";
-const QEMU_REVISION: &str = "17c1f083eefca42088d6a88df04c65713f1cc58a";
+const QEMU_REVISION: &str = "50e103da485d2a538232707beb6b757232a5cf7d";
 
 fn build_dep_check(tools: &[&str]) {
     for tool in tools {
