@@ -188,6 +188,7 @@ extern "C" {
     fn libafl_qemu_num_regs() -> i32;
     fn libafl_qemu_set_breakpoint(addr: u64) -> i32;
     fn libafl_qemu_remove_breakpoint(addr: u64) -> i32;
+    fn libafl_qemu_suspend_other_threads();
     fn libafl_flush_jit();
     fn libafl_qemu_set_hook(addr: u64, callback: extern "C" fn(u64), val: u64) -> i32;
     fn libafl_qemu_remove_hook(addr: u64) -> i32;
@@ -551,6 +552,13 @@ impl Emulator {
             libafl_flush_jit();
         }
     }
+
+    pub fn suspend_other_threads(&self) {
+        unsafe {
+            libafl_qemu_suspend_other_threads();
+        }
+    }
+
 
     // TODO add has_X_hook() and panic when setting a hook for the second time
 
