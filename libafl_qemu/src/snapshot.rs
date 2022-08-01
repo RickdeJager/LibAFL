@@ -17,7 +17,9 @@ use crate::{
 #[cfg(cpu_target = "arm")]
 use crate::{SYS_fstatat64, SYS_mmap2};
 #[cfg(not(cpu_target = "arm"))]
-use crate::{SYS_mmap, SYS_newfstatat};
+use crate::SYS_mmap;
+#[cfg(not(any(cpu_target = "arm", cpu_target="i386")))]
+use crate::SYS_newfstatat;
 
 pub const SNAPSHOT_PAGE_SIZE: usize = 4096;
 pub const SNAPSHOT_PAGE_MASK: GuestAddr = !(SNAPSHOT_PAGE_SIZE as GuestAddr - 1);
@@ -321,7 +323,7 @@ where
             let h = hooks.match_helper_mut::<QemuSnapshotHelper>().unwrap();
             h.access(a0 as GuestAddr, a3 as usize);
         }
-        #[cfg(not(cpu_target = "arm"))]
+        #[cfg(not(any(cpu_target = "arm", cpu_target = "i386")))]
         SYS_newfstatat => {
             if a2 != 0 {
                 let h = hooks.match_helper_mut::<QemuSnapshotHelper>().unwrap();
